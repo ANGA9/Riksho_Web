@@ -3,45 +3,85 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+const icons = {
+  star: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>,
+  car: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>,
+  map: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>,
+  box: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>,
+  globe: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>,
+  dollar: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>,
+  bike: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="5.5" cy="17.5" r="3.5"></circle><circle cx="18.5" cy="17.5" r="3.5"></circle><path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h2"></path></svg>,
+  truck: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>,
+  user: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>,
+  phone: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>,
+  shield: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>,
+  heart: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>,
+  leaf: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>,
+  building: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>,
+  briefcase: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
+  news: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"></path><path d="M18 14h-8"></path><path d="M15 18h-5"></path><path d="M10 6h8v4h-8V6Z"></path></svg>,
+  contact: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>,
+};
+
 const megaMenuData = [
   {
     id: "fair-services",
     label: "Fair services",
     links: [
-      { label: "Why choose AngaZip", desc: "Discover what makes us the fairest choice.", icon: "✨", href: "#" },
-      { label: "City rides", desc: "Everyday rides at fair prices you agree on.", icon: "🚗", href: "#" },
-      { label: "City to City", desc: "Travel comfortably between cities.", icon: "🛣️", href: "#" },
-      { label: "Delivery", desc: "Fast and reliable door-to-door delivery.", icon: "📦", href: "#" },
+      { label: "Why choose AngaZip", desc: "Discover what makes us the fairest choice.", icon: icons.star, href: "#" },
+      { label: "City rides", desc: "Everyday rides at fair prices you agree on.", icon: icons.car, href: "#" },
+      { label: "City to City", desc: "Travel comfortably between cities.", icon: icons.map, href: "#" },
+      { label: "Delivery", desc: "Fast and reliable door-to-door delivery.", icon: icons.box, href: "#" },
     ]
   },
   {
     id: "earn",
     label: "Earn with AngaZip",
-    links: []
+    links: [
+      { label: "Earn with us", desc: "Drive on your own terms and keep more.", icon: icons.dollar, href: "#" },
+      { label: "City rides", desc: "Provide rides in your local city.", icon: icons.car, href: "#" },
+      { label: "City to City", desc: "Take passengers on long-distance trips.", icon: icons.map, href: "#" },
+      { label: "Courier delivery", desc: "Deliver small packages quickly.", icon: icons.bike, href: "#" },
+      { label: "Freight delivery", desc: "Move heavy cargo and goods.", icon: icons.truck, href: "#" },
+    ]
   },
   {
     id: "support",
     label: "Support",
-    links: []
+    links: [
+      { label: "Passengers", desc: "Help with your rides and account.", icon: icons.user, href: "#" },
+      { label: "Drivers", desc: "Assistance for our driving partners.", icon: icons.car, href: "#" },
+      { label: "Couriers and bikes", desc: "Support for delivery partners.", icon: icons.bike, href: "#" },
+      { label: "App issues", desc: "Technical help and troubleshooting.", icon: icons.phone, href: "#" },
+    ]
   },
   {
     id: "safety",
     label: "Safety",
-    links: []
+    links: [
+      { label: "Safety pact", desc: "Our commitment to keeping you safe.", icon: icons.heart, href: "#" },
+      { label: "Passenger safety", desc: "Features designed to protect riders.", icon: icons.shield, href: "#" },
+      { label: "Driver safety", desc: "Tools and guidelines for driver security.", icon: icons.car, href: "#" },
+    ]
   },
   {
     id: "impact",
     label: "Impact",
     links: [
-      { label: "Our Impact", desc: "See how we're changing communities.", icon: "🌍", href: "#" },
-      { label: "Documentary", desc: "Watch the AngaZip story unfold.", icon: "🎥", href: "#" },
-      { label: "Book", desc: "Read our comprehensive journey.", icon: "📖", href: "#" },
+      { label: "Our Impact", desc: "See how we're changing communities.", icon: icons.globe, href: "#" },
+      { label: "Initiatives", desc: "Programs driving positive change.", icon: icons.star, href: "#" },
+      { label: "Sustainability", desc: "Our commitment to the environment.", icon: icons.leaf, href: "#" },
     ]
   },
   {
     id: "about",
     label: "About us",
-    links: []
+    links: [
+      { label: "Company", desc: "Learn about our mission and vision.", icon: icons.building, href: "#" },
+      { label: "Careers", desc: "Join our team and build the future.", icon: icons.briefcase, href: "#" },
+      { label: "Newsroom", desc: "Latest updates and press releases.", icon: icons.news, href: "#" },
+      { label: "Contacts", desc: "Get in touch with us directly.", icon: icons.contact, href: "#" },
+    ]
   }
 ];
 
@@ -92,7 +132,19 @@ export default function Navbar() {
 
               {/* Language Pill */}
               <button className="nav-pill lang-pill">
-                <span style={{ fontWeight: 700, marginRight: "4px" }}>🇮🇳 IN</span>
+                <span style={{ fontWeight: 700, marginRight: "4px", display: "flex", alignItems: "center", gap: "6px" }}>
+                  <svg width="18" height="13" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: '2px', objectFit: 'cover' }}>
+                    <rect width="300" height="66.66" fill="#FF9933"/>
+                    <rect y="66.66" width="300" height="66.66" fill="#FFFFFF"/>
+                    <rect y="133.33" width="300" height="66.66" fill="#138808"/>
+                    <circle cx="150" cy="100" r="24" fill="none" stroke="#000080" strokeWidth="4"/>
+                    <line x1="150" y1="76" x2="150" y2="124" stroke="#000080" strokeWidth="2"/>
+                    <line x1="126" y1="100" x2="174" y2="100" stroke="#000080" strokeWidth="2"/>
+                    <line x1="133" y1="83" x2="167" y2="117" stroke="#000080" strokeWidth="2"/>
+                    <line x1="167" y1="83" x2="133" y2="117" stroke="#000080" strokeWidth="2"/>
+                  </svg>
+                  IN
+                </span>
                 <span>En</span>
               </button>
 
