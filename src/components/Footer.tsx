@@ -49,7 +49,7 @@ export default function Footer() {
           {/* Wordmark Column */}
           <div className="footer-brand">
             <Link href="/">
-              <span className="navbar-brand">
+              <span className="navbar-brand" style={{ color: "var(--color-indigo)" }}>
                 AngaZip
               </span>
             </Link>

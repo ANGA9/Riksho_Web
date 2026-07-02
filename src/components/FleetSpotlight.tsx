@@ -58,7 +58,7 @@ export default function FleetSpotlight() {
                     margin: 0
                   }}
                 >
-                  <svg className="w-4 h-4" style={{ color: "var(--color-indigo)" }} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <svg style={{ width: "16px", height: "16px", flexShrink: 0, color: "var(--color-indigo)" }} fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                   </svg>
                   {feature}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const navLinks = [
@@ -13,9 +13,19 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
       <div className="container">
         {/* Wordmark */}
         <Link href="/" className="navbar-brand">
@@ -33,12 +43,9 @@ export default function Navbar() {
 
         {/* CTA + Hamburger */}
         <div className="navbar-actions">
-          <Link href="#download" className="btn-primary" style={{ display: "none" }} id="desktop-cta">
+          <Link href="#download" className="btn-primary btn-nav-cta">
             Get the App
           </Link>
-          <style>{`
-            @media (min-width: 640px) { #desktop-cta { display: inline-flex !important; } }
-          `}</style>
 
           {/* Hamburger */}
           <button

@@ -48,7 +48,7 @@ export default function AppDownloadCTA() {
           {/* Right — Phone Mockup */}
           <div className="download-image">
             <Image
-              src="/images/app_mockup.png"
+              src="/images/app_mockup_v2.png"
               alt="AngaZip App Mockup"
               fill
               sizes="(max-width: 1024px) 100vw, 300px"
