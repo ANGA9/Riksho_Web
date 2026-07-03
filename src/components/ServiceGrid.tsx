@@ -54,7 +54,7 @@ export default function ServiceGrid() {
           </h2>
           <p className="section-subtitle">
             Whether it&apos;s you, your parcel, or your entire delivery fleet —
-            AngaZip gets it there.
+            AngaZap gets it there.
           </p>
         </div>
 

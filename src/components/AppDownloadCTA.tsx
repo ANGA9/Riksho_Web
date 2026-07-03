@@ -12,7 +12,7 @@ export default function AppDownloadCTA() {
           {/* Left — Content */}
           <div className="download-content">
             <h2>
-              Get the AngaZip app
+              Get the AngaZap app
             </h2>
 
             <p>
@@ -49,7 +49,7 @@ export default function AppDownloadCTA() {
           <div className="download-image">
             <Image
               src="/images/app_mockup_v2.png"
-              alt="AngaZip App Mockup"
+              alt="AngaZap App Mockup"
               fill
               sizes="(max-width: 1024px) 100vw, 300px"
             />

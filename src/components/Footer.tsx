@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const footerColumns = [
   {
-    title: "Why AngaZip",
+    title: "Why AngaZap",
     links: [
       { label: "Fair Pricing", href: "#" },
       { label: "Safety", href: "/safety" },
@@ -11,7 +11,7 @@ const footerColumns = [
     ],
   },
   {
-    title: "Earn with AngaZip",
+    title: "Earn with AngaZap",
     links: [
       { label: "Drive a Cab", href: "/ride" },
       { label: "Ride a Bike Taxi", href: "/ride" },
@@ -50,7 +50,7 @@ export default function Footer() {
           <div className="footer-brand">
             <Link href="/">
               <span className="navbar-brand" style={{ color: "var(--color-indigo)" }}>
-                AngaZip
+                AngaZap
               </span>
             </Link>
             <p>
@@ -100,7 +100,7 @@ export default function Footer() {
         {/* Divider */}
         <div className="footer-bottom">
           <p>
-            © {new Date().getFullYear()} AngaZip Technologies Pvt. Ltd. All rights reserved.
+            © {new Date().getFullYear()} AngaZap Technologies Pvt. Ltd. All rights reserved.
           </p>
           <div className="footer-legal">
             <Link href="#">Privacy Policy</Link>

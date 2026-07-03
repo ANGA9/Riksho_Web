@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AngaZip — Rides, Deliveries & Business Fleets | One App for Everything That Moves",
-  description: "Cabs, bike taxis, intercity rides, and on-demand business fleets — AngaZip is one app for everything that needs to move. Fair fares, verified drivers, live tracking.",
-  keywords: ["ride hailing", "bike taxi", "delivery", "fleet management", "intercity rides", "AngaZip", "India"],
+  title: "AngaZap — Rides, Deliveries & Business Fleets | One App for Everything That Moves",
+  description: "Cabs, bike taxis, intercity rides, and on-demand business fleets — AngaZap is one app for everything that needs to move. Fair fares, verified drivers, live tracking.",
+  keywords: ["ride hailing", "bike taxi", "delivery", "fleet management", "intercity rides", "AngaZap", "India"],
   openGraph: {
-    title: "AngaZip — One App for Everything That Moves",
+    title: "AngaZap — One App for Everything That Moves",
     description: "Cabs, bike taxis, intercity rides, and on-demand business fleets. Fair fares, live tracking, verified partners.",
     type: "website",
     locale: "en_IN",

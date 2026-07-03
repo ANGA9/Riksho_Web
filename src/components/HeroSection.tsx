@@ -47,7 +47,7 @@ export default function HeroSection() {
         >
           <Image
             src={slide.image}
-            alt="AngaZip Hero"
+            alt="AngaZap Hero"
             fill
             priority={index === 0}
             sizes="100vw"

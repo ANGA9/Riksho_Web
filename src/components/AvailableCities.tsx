@@ -31,7 +31,7 @@ export default function AvailableCities() {
             Available across India
           </h2>
           <p className="section-subtitle">
-            And expanding every month. See if AngaZip is in your city.
+            And expanding every month. See if AngaZap is in your city.
           </p>
         </div>
 

@@ -1,6 +1,6 @@
-# AngaZip — Introductory Website Blueprint
+# AngaZap — Introductory Website Blueprint
 
-A complete, build-ready plan for the AngaZip marketing/introductory site, structured the way inDrive's site is structured (hero → service grid → trust/safety → coverage → CTA → footer), but built entirely around AngaZip's own brand system, services, and visual identity.
+A complete, build-ready plan for the AngaZap marketing/introductory site, structured the way inDrive's site is structured (hero → service grid → trust/safety → coverage → CTA → footer), but built entirely around AngaZap's own brand system, services, and visual identity.
 
 ---
 
@@ -19,7 +19,7 @@ A complete, build-ready plan for the AngaZip marketing/introductory site, struct
 **Rule of thumb:** White dominates every section. Indigo `#4338CA` is the "signature" color used the way inDrive uses lime — as solid-fill accent blocks behind illustrations, section backgrounds for 1-2 high-impact sections (like the Safety section), and all primary buttons. Cyan is a *seasoning*, not a base color — max 5% of any screen.
 
 ### Typography
-- **Wordmark / Logo:** "AngaZip" set in **Space Grotesk Bold** (or **Sora ExtraBold** as a second choice) — both are free, modern, geometric sans fonts with the same confident-but-friendly rounded character as inDrive's logotype. Set in all one weight, one color (`#4338CA` on white nav, white on indigo sections), no icon needed — just the wordmark, like inDrive's does with "inDrive."
+- **Wordmark / Logo:** "AngaZap" set in **Space Grotesk Bold** (or **Sora ExtraBold** as a second choice) — both are free, modern, geometric sans fonts with the same confident-but-friendly rounded character as inDrive's logotype. Set in all one weight, one color (`#4338CA` on white nav, white on indigo sections), no icon needed — just the wordmark, like inDrive's does with "inDrive."
 - **Headlines (H1/H2):** Space Grotesk Bold / ExtraBold
 - **Body text:** Inter (Regular/Medium) — highly legible at small sizes, pairs cleanly with Space Grotesk
 - Keep headline sizes big and confident: 48–64px desktop H1, 28–32px mobile H1 — inDrive leans on oversized type as a core part of its personality; do the same.
@@ -48,7 +48,7 @@ This blueprint details the **Home page** fully — the same section patterns rep
 ## 3. Home Page — Section by Section
 
 ### 3.1 Navbar (sticky)
-- Left: AngaZip wordmark (indigo on white background)
+- Left: AngaZap wordmark (indigo on white background)
 - Center/left nav links: `Ride` · `City to City` · `Fleet & Delivery` · `Safety` · `About`
 - Right: `Get the App` button (solid indigo pill, white text) + hamburger `Menu` on mobile
 
@@ -80,7 +80,7 @@ A candid, warm documentary-style photograph of an Indian delivery rider in his m
 This is your version of inDrive's "One app, many services" card grid — the single most important section on the page, since it explains your entire multi-vertical model at a glance.
 
 **Section headline:** `One app, every way to move`
-**Subhead:** `Whether it's you, your parcel, or your entire delivery fleet — AngaZip gets it there.`
+**Subhead:** `Whether it's you, your parcel, or your entire delivery fleet — AngaZap gets it there.`
 
 Four cards, 2x2 grid on desktop, stacked on mobile. Each card = white background, rounded corners, soft shadow, a **flat cartoon illustration sitting on a solid indigo or cyan blob shape** (exactly like inDrive's "City rides" / "Delivery" cards), headline, one-line description, and text links.
 
@@ -111,10 +111,10 @@ Flat vector cartoon illustration in a bold, minimal editorial style: a delivery 
 
 ---
 
-### 3.4 Why Choose AngaZip
+### 3.4 Why Choose AngaZap
 Simple 3–4 column icon row (no illustration needed, use simple line icons — Lucide icon set, covered in tech stack below). Keep this section text-only + icons, no imagery, to give the page breathing room between illustration-heavy sections.
 
-**Headline:** `Why people and businesses choose AngaZip`
+**Headline:** `Why people and businesses choose AngaZap`
 
 - Fair, transparent pricing — no surprise surge
 - Verified drivers and delivery partners
@@ -151,7 +151,7 @@ This section doesn't exist on inDrive — it's yours to own, since B2B fleet-on-
 **Copy:**
 - Eyebrow: `For Business`
 - H2: `Your delivery fleet, without owning a fleet`
-- Body: `From single parcels to full truckloads — AngaZip gives e-commerce sellers, SMEs, and enterprises on-demand access to verified vehicles and drivers, with live tracking on every dispatch.`
+- Body: `From single parcels to full truckloads — AngaZap gives e-commerce sellers, SMEs, and enterprises on-demand access to verified vehicles and drivers, with live tracking on every dispatch.`
 - Bullet row: `Same-day city delivery` · `Scheduled fleet access` · `Bulk cargo & truckload` · `API integration for sellers`
 - Button: `Talk to our business team`
 
@@ -175,7 +175,7 @@ No imagery needed — icon-only (location pin, Lucide icon set).
 Full-width solid indigo band near the bottom of the page.
 
 **Copy:**
-- H2 (white): `Get the AngaZip app`
+- H2 (white): `Get the AngaZap app`
 - Subtext (white/80%): `Book rides, send parcels, or manage your fleet — all from one app.`
 - App Store + Google Play badge buttons (white pill buttons)
 - Optional: QR code block (generate programmatically, not via Gemini)
@@ -191,7 +191,7 @@ A clean, minimal 3D-style mockup of a smartphone floating at a slight angle agai
 ### 3.9 Footer
 Match inDrive's footer structure — multi-column link layout on a light background (`#EEF2FF` or very light grey), wordmark top-left, no imagery required.
 
-Columns: `Why AngaZip` / `Earn with AngaZip` (Ride, Bike Taxi, Courier, Fleet) / `Safety` / `Company` (About, Careers, Newsroom, Contact) / `Support`
+Columns: `Why AngaZap` / `Earn with AngaZap` (Ride, Bike Taxi, Courier, Fleet) / `Safety` / `Company` (About, Careers, Newsroom, Contact) / `Support`
 
 ---
 
