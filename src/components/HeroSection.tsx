@@ -74,19 +74,19 @@ export default function HeroSection() {
 
           {/* CTA */}
           <div className="hero-actions animate-fade-in-up stagger-3">
-            <a href="#download" className="btn-primary" style={{ padding: "16px 32px", fontSize: "1rem" }}>
+            <a href="#download" className="btn-primary hero-main-cta">
               Get the App
               <svg style={{ marginLeft: "8px", width: "16px", height: "16px" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </a>
-            <a href="#services" className="btn-outline-white" style={{ padding: "16px 32px", fontSize: "1rem", borderRadius: "999px" }}>
+            <a href="#services" className="btn-outline-white hidden-mobile" style={{ padding: "16px 32px", fontSize: "1rem", borderRadius: "999px" }}>
               Explore Services
             </a>
           </div>
           
           {/* Slide Indicators */}
-          <div style={{ display: "flex", gap: "8px", marginTop: "40px" }} className="animate-fade-in-up stagger-4">
+          <div className="hero-indicators-container animate-fade-in-up stagger-4">
             {slides.map((_, idx) => (
               <button 
                 key={idx}

@@ -605,39 +605,60 @@ ul {
   .mobile-only-cta { display: none; }
 }
 
-/* --- Hero Banner Dots --- */
+/* --- Hero Banner Dots / Progress Bars --- */
 .hero-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 4px;
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
   background-color: rgba(255, 255, 255, 0.4);
-  transition: width 0.3s ease, background-color 0.3s ease;
+  transition: background-color 0.3s ease;
   padding: 0;
   border: none;
-  cursor: pointer;
 }
 
 .hero-dot.active {
-  background-color: var(--color-cyan);
-  width: 8px; /* Default for mobile */
+  background-color: var(--color-white);
+}
+
+.hero-indicators-container {
+  display: flex;
+  gap: 6px;
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
+  z-index: 20;
 }
 
 @media (min-width: 768px) {
+  .hero-indicators-container {
+    position: static;
+    margin-top: 40px;
+    gap: 8px;
+    width: 200px;
+  }
+  .hero-dot {
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+  }
   .hero-dot.active {
-    width: 32px;
-    /* The slide transitions every 3500ms, so we linearly transition the width over that time */
-    transition: width 3.5s linear, background-color 0.3s ease;
+    background-color: var(--color-cyan);
   }
 }
 
 /* Hero Section */
 .hero-section {
   position: relative;
-  min-height: 90vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   overflow: hidden;
   padding-top: 80px; /* Offset navbar */
+}
+@media (min-width: 768px) {
+  .hero-section {
+    min-height: 90vh;
+  }
 }
 
 .hero-bg {
@@ -744,6 +765,22 @@ ul {
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+  .hidden-mobile {
+    display: none !important;
+  }
+}
+
+.hero-main-cta {
+  padding: 16px 32px;
+  font-size: 1rem;
+}
+@media (max-width: 639px) {
+  .hero-main-cta {
+    width: max-content;
+    padding: 14px 28px;
+    font-size: 1.125rem;
+    border-radius: 12px;
   }
 }
 
