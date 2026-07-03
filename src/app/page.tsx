@@ -17,8 +17,8 @@ export default function Home() {
         <ServiceGrid />
         <WhyChoose />
         <SafetySection />
-        <FleetSpotlight />
         <AvailableCities />
+        <FleetSpotlight />
         <AppDownloadCTA />
       </main>
       <Footer />
