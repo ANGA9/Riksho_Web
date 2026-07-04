@@ -15,7 +15,7 @@ def remove_white(input_path, output_path, threshold=240):
     Image.fromarray(data).save(output_path)
 
 print("Processing phone mockup...")
-remove_white(r"C:\Users\shaws\.gemini\antigravity-ide\brain\faf86e97-b5fd-48db-ba6a-3a0fbc5168e3\phone_mockup_1783068214546.png", r"c:\Users\shaws\AngaZap\angazap_web\public\images\phone_mockup_transparent.png")
+remove_white(r"C:\Users\shaws\.gemini\antigravity-ide\brain\faf86e97-b5fd-48db-ba6a-3a0fbc5168e3\phone_mockup_1783068214546.png", r"c:\Users\shaws\Riksho\riksho_web\public\images\phone_mockup_transparent.png")
 print("Processing abstract shape...")
-remove_white(r"C:\Users\shaws\.gemini\antigravity-ide\brain\faf86e97-b5fd-48db-ba6a-3a0fbc5168e3\abstract_route_shape_1783068223609.png", r"c:\Users\shaws\AngaZap\angazap_web\public\images\abstract_route_shape_transparent.png")
+remove_white(r"C:\Users\shaws\.gemini\antigravity-ide\brain\faf86e97-b5fd-48db-ba6a-3a0fbc5168e3\abstract_route_shape_1783068223609.png", r"c:\Users\shaws\Riksho\riksho_web\public\images\abstract_route_shape_transparent.png")
 print("Done!")
