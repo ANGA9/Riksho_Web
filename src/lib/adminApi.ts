@@ -1,0 +1,35 @@
+import { supabaseAdminClient } from "./supabaseAdminClient";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+
+export async function adminFetch(endpoint: string, options: RequestInit = {}) {
+  // Get current session token
+  const { data: { session } } = await supabaseAdminClient.auth.getSession();
+  
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    ...(options.headers || {}),
+  };
+
+  if (session?.access_token) {
+    headers["Authorization"] = `Bearer ${session.access_token}`;
+  }
+
+  const response = await fetch(`${API_URL}${endpoint}`, {
+    ...options,
+    headers,
+  });
+
+  if (!response.ok) {
+    let errMessage = `Error ${response.status}`;
+    try {
+      const err = await response.json();
+      errMessage = err.message || err.error || errMessage;
+    } catch (e) {
+      // Ignore parse error
+    }
+    throw new Error(errMessage);
+  }
+
+  return response.json();
+}

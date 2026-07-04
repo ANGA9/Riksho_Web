@@ -1,0 +1,178 @@
+"use client";
+
+import { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { adminFetch } from "@/lib/adminApi";
+
+function DriversListContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  const statusParam = searchParams.get("status") || "pending";
+  const searchParam = searchParams.get("q") || "";
+  const pageParam = parseInt(searchParams.get("page") || "0");
+
+  const [drivers, setDrivers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState(searchParam);
+
+  const tabs = [
+    { id: "pending", label: "Pending Review" },
+    { id: "approved", label: "Approved" },
+    { id: "rejected", label: "Rejected" },
+    { id: "suspended", label: "Suspended" },
+    { id: "all", label: "All Drivers" },
+  ];
+
+  const fetchDrivers = async () => {
+    setLoading(true);
+    try {
+      const qs = new URLSearchParams({
+        status: statusParam,
+        q: searchParam,
+        page: pageParam.toString()
+      }).toString();
+
+      const data = await adminFetch(`/admin/drivers?${qs}`);
+      setDrivers(data);
+    } catch (err) {
+      console.error("Failed to fetch drivers", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDrivers();
+  }, [statusParam, searchParam, pageParam]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push(`/admin/drivers?status=${statusParam}&q=${search}&page=0`);
+  };
+
+  const handleTabChange = (tabId: string) => {
+    router.push(`/admin/drivers?status=${tabId}&q=${searchParam}&page=0`);
+  };
+
+  return (
+    <div>
+      <h1 className="admin-page-title">Drivers Management</h1>
+      
+      <div className="admin-table-container">
+        <div className="admin-table-toolbar">
+          <div className="admin-tabs">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                className={`admin-tab ${statusParam === tab.id ? "active" : ""}`}
+                onClick={() => handleTabChange(tab.id)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <form onSubmit={handleSearch}>
+            <input 
+              type="text" 
+              placeholder="Search name or phone..." 
+              className="admin-search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </form>
+        </div>
+
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Driver Info</th>
+              <th>Phone</th>
+              <th>Vehicle</th>
+              <th>Status</th>
+              <th>Registered</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={6} style={{ textAlign: "center", padding: "32px", color: "var(--color-text-muted)" }}>
+                  Loading drivers...
+                </td>
+              </tr>
+            ) : drivers.length === 0 ? (
+              <tr>
+                <td colSpan={6} style={{ textAlign: "center", padding: "32px", color: "var(--color-text-muted)" }}>
+                  No drivers found.
+                </td>
+              </tr>
+            ) : (
+              drivers.map(driver => (
+                <tr key={driver.id}>
+                  <td>
+                    <div style={{ fontWeight: 600 }}>{driver.name}</div>
+                    <div style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
+                      DL: {driver.license_no}
+                    </div>
+                  </td>
+                  <td>{driver.phone}</td>
+                  <td>
+                    {driver.vehicles?.[0] ? (
+                      <div>
+                        <span style={{ textTransform: "capitalize", fontWeight: 500 }}>{driver.vehicles[0].type}</span>
+                        <div style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>{driver.vehicles[0].plate}</div>
+                      </div>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                  <td>
+                    <span className={`admin-badge badge-${driver.verification_status}`}>
+                      {driver.verification_status}
+                    </span>
+                  </td>
+                  <td>{new Date(driver.created_at).toLocaleDateString()}</td>
+                  <td>
+                    <Link href={`/admin/drivers/${driver.id}`} className="admin-btn admin-btn-secondary" style={{ padding: "6px 12px", fontSize: "13px" }}>
+                      Review
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+        
+        {/* Pagination controls */}
+        <div style={{ padding: "16px 24px", borderTop: "1px solid #E5E7EB", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <button 
+            className="admin-btn admin-btn-secondary" 
+            disabled={pageParam === 0}
+            onClick={() => router.push(`/admin/drivers?status=${statusParam}&q=${searchParam}&page=${Math.max(0, pageParam - 1)}`)}
+          >
+            Previous
+          </button>
+          <span style={{ fontSize: "14px", color: "var(--color-text-muted)" }}>Page {pageParam + 1}</span>
+          <button 
+            className="admin-btn admin-btn-secondary"
+            disabled={drivers.length < 20}
+            onClick={() => router.push(`/admin/drivers?status=${statusParam}&q=${searchParam}&page=${pageParam + 1}`)}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function DriversList() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DriversListContent />
+    </Suspense>
+  );
+}
