@@ -8,29 +8,31 @@ export default function DeliveryPage() {
   return (
     <>
       <Navbar />
-      <main style={{ paddingTop: "80px" }}>
-        {/* Hero Section with Illustration */}
-        <section className="section animate-fade-in-up" style={{ backgroundColor: "#f9fafb", paddingBottom: "0", borderBottom: "1px solid var(--admin-border)" }}>
-          <div className="container text-center">
-            <h1 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", marginBottom: "16px", color: "var(--color-indigo)" }}>
+      <main>
+        {/* Full-bleed Photo Hero */}
+        <section className="hero-section" style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+          <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1 }}>
+            <Image 
+              src="/images/photo_delivery.png"
+              alt="Delivery hero"
+              fill
+              style={{ objectFit: "cover", objectPosition: "center" }}
+              priority
+            />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(15,23,42,0.85), rgba(15,23,42,0.4))" }} />
+          </div>
+          
+          <div className="container relative z-10" style={{ color: "white" }}>
+            <h1 className="font-display animate-fade-in-up" style={{ fontSize: "clamp(40px, 5vw, 64px)", marginBottom: "16px", color: "white" }}>
               Send it. Track it. Done.
             </h1>
-            <p className="text-muted" style={{ fontSize: "1.125rem", maxWidth: "600px", margin: "0 auto 48px auto" }}>
+            <p className="animate-fade-in-up" style={{ fontSize: "1.125rem", maxWidth: "600px", opacity: 0.9, animationDelay: "0.1s" }}>
               Fast parcel delivery for individuals and small businesses.
             </p>
-            
-            <div style={{ position: "relative", width: "100%", maxWidth: "900px", height: "450px", margin: "0 auto" }}>
-              <Image 
-                src="/images/ill_delivery.png"
-                alt="Delivery illustration"
-                fill
-                style={{ objectFit: "contain", objectPosition: "bottom center" }}
-              />
-            </div>
           </div>
         </section>
 
-        {/* Features in Boxes & Real Photo */}
+        {/* Features in Boxes & Illustration */}
         <section className="section">
           <div className="container">
             <div style={{ textAlign: "center", marginBottom: "48px" }}>
@@ -56,13 +58,13 @@ export default function DeliveryPage() {
               </div>
             </div>
             
-            {/* Real Photo Banner */}
-            <div style={{ position: "relative", width: "100%", height: "500px", borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-card)" }}>
+            {/* Illustration Graphic */}
+            <div style={{ position: "relative", width: "100%", height: "400px", margin: "0 auto", backgroundColor: "#f9fafb", borderRadius: "var(--radius-lg)", overflow: "hidden", border: "1px solid var(--admin-border)" }}>
               <Image 
-                src="/images/photo_delivery.png"
-                alt="Courier handing parcel"
+                src="/images/ill_delivery.png"
+                alt="Delivery illustration"
                 fill
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: "contain", padding: "40px" }}
               />
             </div>
           </div>
