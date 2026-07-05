@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import FAQSection from "@/components/FAQSection";
+import AppDownloadCTA from "@/components/AppDownloadCTA";
 
 export default function CityRidesPage() {
   return (
@@ -73,15 +74,8 @@ export default function CityRidesPage() {
         {/* FAQ Section */}
         <FAQSection />
 
-        {/* CTA Band */}
-        <section className="section text-center" style={{ backgroundColor: "var(--color-indigo)", color: "white" }}>
-          <div className="container">
-            <h2 className="font-display" style={{ fontSize: "36px", marginBottom: "24px", color: "white" }}>Ready to move?</h2>
-            <Link href="/#download" className="btn-white" style={{ fontSize: "16px", padding: "14px 32px" }}>
-              Get the App
-            </Link>
-          </div>
-        </section>
+        {/* App Download CTA */}
+        <AppDownloadCTA />
       </main>
       <Footer />
     </>
