@@ -26,13 +26,12 @@ const icons = {
 const megaMenuData = [
   {
     id: "services",
-    label: "Services & Locations",
+    label: "Services",
     links: [
       { label: "City rides", desc: "Everyday rides at fair prices.", icon: icons.car, href: "/city-rides" },
       { label: "City to City", desc: "Travel comfortably between cities.", icon: icons.map, href: "/city-to-city" },
       { label: "Delivery", desc: "Fast and reliable door-to-door delivery.", icon: icons.box, href: "/delivery" },
-      { label: "Cities & Airports", desc: "Find out where we operate.", icon: icons.globe, href: "/cities" },
-      { label: "Live Tracking", desc: "Real-time safety and route tracking.", icon: icons.shield, href: "/live-tracking" },
+      { label: "Cities", desc: "Find out where we operate.", icon: icons.globe, href: "/cities" },
     ]
   },
   {
@@ -47,13 +46,12 @@ const megaMenuData = [
   },
   {
     id: "company",
-    label: "Company & Impact",
+    label: "Company",
     links: [
       { label: "About us", desc: "Learn about our mission and vision.", icon: icons.building, href: "/about-us" },
       { label: "Careers", desc: "Join our team and build the future.", icon: icons.briefcase, href: "/careers" },
-      { label: "Newsroom", desc: "Latest updates and press releases.", icon: icons.news, href: "/blog" },
       { label: "Safety Hub", desc: "Our commitment to keeping everyone safe.", icon: icons.shield, href: "/safety" },
-      { label: "Impact & Sustainability", desc: "See how we're changing communities.", icon: icons.leaf, href: "/impact" },
+      { label: "Impact", desc: "See how we're changing communities.", icon: icons.leaf, href: "/impact" },
     ]
   },
   {

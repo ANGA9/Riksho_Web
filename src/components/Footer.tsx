@@ -8,7 +8,6 @@ const footerColumns = [
       { label: "City to City", href: "/city-to-city" },
       { label: "Delivery", href: "/delivery" },
       { label: "Cities & Airports", href: "/cities" },
-      { label: "Live Tracking", href: "/live-tracking" },
     ],
   },
   {
@@ -25,7 +24,6 @@ const footerColumns = [
     links: [
       { label: "About Us", href: "/about-us" },
       { label: "Careers", href: "/careers" },
-      { label: "Newsroom", href: "/blog" },
       { label: "Safety Hub", href: "/safety" },
       { label: "Impact & Sustainability", href: "/impact" },
     ],
