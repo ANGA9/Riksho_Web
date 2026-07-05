@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import Link from "next/link";
 import FAQSection from "@/components/FAQSection";
 import AppDownloadCTA from "@/components/AppDownloadCTA";
 
@@ -14,8 +13,8 @@ export default function RideBikeTaxiPage() {
         <section className="hero-section" style={{ minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
           <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: -1 }}>
             <Image 
-              src="/images/bike.png"
-              alt="Ride bike hero"
+              src="/images/photo_ride_bike.png"
+              alt="Ride bike taxi hero"
               fill
               style={{ objectFit: "cover", objectPosition: "center" }}
               priority
@@ -25,48 +24,149 @@ export default function RideBikeTaxiPage() {
           
           <div className="container relative z-10" style={{ color: "white" }}>
             <h1 className="font-display animate-fade-in-up" style={{ fontSize: "clamp(40px, 5vw, 64px)", marginBottom: "16px", color: "white" }}>
-              Turn your bike into an income
+              Turn your bike into income
             </h1>
             <p className="animate-fade-in-up" style={{ fontSize: "1.125rem", maxWidth: "600px", opacity: 0.9, animationDelay: "0.1s" }}>
-              Flexible bike taxi rides, whenever you're free to ride.
+              Ride when you're free. Get paid every week. No boss, no fixed hours.
             </p>
           </div>
         </section>
 
-        {/* Features in Boxes & Illustration */}
-        <section className="section">
+        {/* Benefits */}
+        <section className="section bg-light">
           <div className="container">
             <div style={{ textAlign: "center", marginBottom: "48px" }}>
-              <span className="split-eyebrow" style={{ color: "var(--color-indigo)", fontWeight: 700, textTransform: "uppercase", fontSize: "0.875rem", letterSpacing: "0.05em", display: "block", marginBottom: "16px" }}>Ride with Riksho</span>
-              <h2 className="font-display" style={{ fontSize: "36px" }}>Beat the traffic, boost your income</h2>
+              <span className="split-eyebrow" style={{ color: "var(--color-indigo)", fontWeight: 700, textTransform: "uppercase", fontSize: "0.875rem", letterSpacing: "0.05em", display: "block", marginBottom: "16px" }}>Why Ride With Us</span>
+              <h2 className="font-display" style={{ fontSize: "36px" }}>Freedom to earn on your terms</h2>
             </div>
             
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", marginBottom: "60px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
               <div style={{ background: "white", padding: "32px", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-card)", border: "1px solid var(--admin-border)" }}>
                 <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "var(--color-indigo-tint)", color: "var(--color-indigo)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>1</div>
-                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Ultimate Flexibility</h4>
-                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Log in for an hour on your way home, or ride all day. You choose when to work.</p>
+                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Flexible Hours</h4>
+                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Log in and accept rides only when it suits your schedule. Perfect for part-time income.</p>
               </div>
               <div style={{ background: "white", padding: "32px", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-card)", border: "1px solid var(--admin-border)" }}>
                 <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "var(--color-indigo-tint)", color: "var(--color-indigo)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>2</div>
-                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Fast onboarding</h4>
-                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Upload your license, RC, and insurance directly in the app. Start earning in 24 hours.</p>
+                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Fast Onboarding</h4>
+                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Sign up online, upload your documents, and start earning within 24 hours.</p>
               </div>
               <div style={{ background: "white", padding: "32px", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-card)", border: "1px solid var(--admin-border)" }}>
                 <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "var(--color-indigo-tint)", color: "var(--color-indigo)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>3</div>
-                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>High Demand</h4>
-                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Bike taxis are the fastest way through city traffic. You'll always have passengers waiting.</p>
+                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Weekly Payouts</h4>
+                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Never wait for your money. Get your earnings deposited straight to your account every week.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Requirements */}
+        <section className="section">
+          <div className="container">
+            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+              <h2 className="font-display" style={{ fontSize: "36px" }}>What you need to start riding</h2>
+            </div>
             
-            {/* Illustration Graphic */}
-            <div style={{ position: "relative", width: "100%", height: "400px", margin: "0 auto", backgroundColor: "#f9fafb", borderRadius: "var(--radius-lg)", overflow: "hidden", border: "1px solid var(--admin-border)" }}>
-              <Image 
-                src="/images/ill_ride_bike.png"
-                alt="Bike taxi illustration"
-                fill
-                style={{ objectFit: "contain", padding: "40px" }}
-              />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px" }}>
+              <div style={{ padding: "40px", backgroundColor: "#f8fafc", borderRadius: "var(--radius-lg)", border: "1px solid var(--admin-border)" }}>
+                <h3 className="font-display" style={{ fontSize: "24px", marginBottom: "24px", color: "var(--color-indigo)" }}>Documents</h3>
+                <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "16px", color: "var(--color-slate-700)" }}>
+                  <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                    <div style={{ color: "var(--color-indigo)", marginTop: "2px" }}>✓</div>
+                    <div>
+                      <div style={{ fontWeight: "600" }}>Valid Driving License</div>
+                      <div style={{ fontSize: "14px", color: "var(--color-slate-500)" }}>Valid two-wheeler driving license</div>
+                    </div>
+                  </li>
+                  <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                    <div style={{ color: "var(--color-indigo)", marginTop: "2px" }}>✓</div>
+                    <div>
+                      <div style={{ fontWeight: "600" }}>Vehicle RC</div>
+                      <div style={{ fontSize: "14px", color: "var(--color-slate-500)" }}>Registration certificate of your two-wheeler</div>
+                    </div>
+                  </li>
+                  <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                    <div style={{ color: "var(--color-indigo)", marginTop: "2px" }}>✓</div>
+                    <div>
+                      <div style={{ fontWeight: "600" }}>PAN Card</div>
+                      <div style={{ fontSize: "14px", color: "var(--color-slate-500)" }}>For tax and background verification</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              
+              <div style={{ padding: "40px", backgroundColor: "#f8fafc", borderRadius: "var(--radius-lg)", border: "1px solid var(--admin-border)" }}>
+                <h3 className="font-display" style={{ fontSize: "24px", marginBottom: "24px", color: "var(--color-indigo)" }}>Vehicle</h3>
+                <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "16px", color: "var(--color-slate-700)" }}>
+                  <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                    <div style={{ color: "var(--color-indigo)", marginTop: "2px" }}>✓</div>
+                    <div>
+                      <div style={{ fontWeight: "600" }}>Registered Two-Wheeler</div>
+                      <div style={{ fontSize: "14px", color: "var(--color-slate-500)" }}>Any scooter or motorcycle in good condition</div>
+                    </div>
+                  </li>
+                  <li style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                    <div style={{ color: "var(--color-indigo)", marginTop: "2px" }}>✓</div>
+                    <div>
+                      <div style={{ fontWeight: "600" }}>Helmets</div>
+                      <div style={{ fontSize: "14px", color: "var(--color-slate-500)" }}>Must carry a helmet for yourself and your passenger</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Rider Story */}
+        <section className="section bg-light">
+          <div className="container">
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "stretch", gap: "0", borderRadius: "var(--radius-lg)", overflow: "hidden", border: "1px solid var(--admin-border)" }}>
+              <div style={{ flex: "1 1 400px", position: "relative", minHeight: "450px" }}>
+                <Image src="/images/photo_ride_bike.png" alt="Rider story" fill style={{ objectFit: "cover" }} />
+              </div>
+              <div style={{ flex: "1 1 400px", backgroundColor: "white", padding: "64px 48px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <div style={{ fontSize: "48px", color: "var(--color-indigo)", marginBottom: "24px", lineHeight: 1 }}>&quot;</div>
+                <p style={{ fontSize: "20px", lineHeight: "1.6", fontWeight: "500", marginBottom: "32px", color: "var(--color-slate-900)" }}>
+                  I use my bike to earn extra money during the weekends. The app is simple, I get rides constantly, and the weekly payouts mean I always have cash on hand.
+                </p>
+                <div>
+                  <div style={{ fontWeight: "700", fontSize: "18px", color: "var(--color-indigo)" }}>Vikram S.</div>
+                  <div style={{ color: "var(--color-slate-500)" }}>Bike Taxi Partner</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Steps to join */}
+        <section className="section">
+          <div className="container">
+            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+              <h2 className="font-display" style={{ fontSize: "36px" }}>How to get started</h2>
+            </div>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "24px", textAlign: "center" }}>
+              <div>
+                <div style={{ width: "64px", height: "64px", borderRadius: "50%", backgroundColor: "var(--color-indigo)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "24px", margin: "0 auto 20px" }}>1</div>
+                <h4 className="font-display" style={{ fontSize: "18px", marginBottom: "8px" }}>Sign up</h4>
+                <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5" }}>Download the partner app and create your account.</p>
+              </div>
+              <div>
+                <div style={{ width: "64px", height: "64px", borderRadius: "50%", backgroundColor: "var(--color-indigo)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "24px", margin: "0 auto 20px" }}>2</div>
+                <h4 className="font-display" style={{ fontSize: "18px", marginBottom: "8px" }}>Upload documents</h4>
+                <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5" }}>Submit your ID, driving license, and vehicle RC.</p>
+              </div>
+              <div>
+                <div style={{ width: "64px", height: "64px", borderRadius: "50%", backgroundColor: "var(--color-indigo)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "24px", margin: "0 auto 20px" }}>3</div>
+                <h4 className="font-display" style={{ fontSize: "18px", marginBottom: "8px" }}>Get verified</h4>
+                <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5" }}>Our team will review your profile within 24 hours.</p>
+              </div>
+              <div>
+                <div style={{ width: "64px", height: "64px", borderRadius: "50%", backgroundColor: "var(--color-indigo)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "24px", margin: "0 auto 20px" }}>4</div>
+                <h4 className="font-display" style={{ fontSize: "18px", marginBottom: "8px" }}>Start earning</h4>
+                <p className="text-muted" style={{ fontSize: "14px", lineHeight: "1.5" }}>Go online and start accepting your first trips.</p>
+              </div>
             </div>
           </div>
         </section>
