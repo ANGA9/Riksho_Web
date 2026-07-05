@@ -28,7 +28,7 @@ const megaMenuData = [
     id: "fair-services",
     label: "Fair services",
     links: [
-      { label: "Why choose Riksho", desc: "Discover what makes us the fairest choice.", icon: icons.star, href: "#" },
+      { label: "Why choose Riksho", desc: "Discover what makes us the fairest choice.", icon: icons.star, href: "/why-choose-riksho" },
       { label: "City rides", desc: "Everyday rides at fair prices you agree on.", icon: icons.car, href: "/city-rides" },
       { label: "City to City", desc: "Travel comfortably between cities.", icon: icons.map, href: "/city-to-city" },
       { label: "Delivery", desc: "Fast and reliable door-to-door delivery.", icon: icons.box, href: "/delivery" },
@@ -38,11 +38,11 @@ const megaMenuData = [
     id: "earn",
     label: "Earn with Riksho",
     links: [
-      { label: "Earn with us", desc: "Drive on your own terms and keep more.", icon: icons.dollar, href: "#" },
-      { label: "City rides", desc: "Provide rides in your local city.", icon: icons.car, href: "#" },
-      { label: "City to City", desc: "Take passengers on long-distance trips.", icon: icons.map, href: "#" },
-      { label: "Courier delivery", desc: "Deliver small packages quickly.", icon: icons.bike, href: "#" },
-      { label: "Freight delivery", desc: "Move heavy cargo and goods.", icon: icons.truck, href: "#" },
+      { label: "Earn with us", desc: "Drive on your own terms and keep more.", icon: icons.dollar, href: "/earn" },
+      { label: "City rides", desc: "Provide rides in your local city.", icon: icons.car, href: "/drive-a-cab" },
+      { label: "Bike Taxi", desc: "Flexible bike taxi rides.", icon: icons.bike, href: "/ride-a-bike-taxi" },
+      { label: "Courier delivery", desc: "Deliver small packages quickly.", icon: icons.box, href: "/deliver-as-courier" },
+      { label: "Freight delivery", desc: "Move heavy cargo and goods.", icon: icons.truck, href: "/join-a-fleet" },
     ]
   },
   {

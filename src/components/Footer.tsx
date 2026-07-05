@@ -13,10 +13,10 @@ const footerColumns = [
   {
     title: "Earn with Riksho",
     links: [
-      { label: "Drive a Cab", href: "/ride" },
-      { label: "Ride a Bike Taxi", href: "/ride" },
-      { label: "Deliver as Courier", href: "/fleet-business" },
-      { label: "Join a Fleet", href: "/fleet-business" },
+      { label: "Drive a Cab", href: "/drive-a-cab" },
+      { label: "Ride a Bike Taxi", href: "/ride-a-bike-taxi" },
+      { label: "Deliver as Courier", href: "/deliver-as-courier" },
+      { label: "Join a Fleet", href: "/join-a-fleet" },
     ],
   },
   {

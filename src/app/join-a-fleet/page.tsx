@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FAQSection from "@/components/FAQSection";
 
-export default function CityRidesPage() {
+export default function JoinFleetPage() {
   return (
     <>
       <Navbar />
@@ -13,16 +13,16 @@ export default function CityRidesPage() {
         <section className="section animate-fade-in-up" style={{ backgroundColor: "#f9fafb", paddingBottom: "0", borderBottom: "1px solid var(--admin-border)" }}>
           <div className="container text-center">
             <h1 className="font-display" style={{ fontSize: "clamp(36px, 5vw, 64px)", marginBottom: "16px", color: "var(--color-indigo)" }}>
-              Comfortable rides, fair fares
+              Put your commercial vehicle to work
             </h1>
             <p className="text-muted" style={{ fontSize: "1.125rem", maxWidth: "600px", margin: "0 auto 48px auto" }}>
-              Book a cab in seconds. Know your fare before you ride.
+              Truck, van, or tempo — get consistent freight bookings through Riksho.
             </p>
             
             <div style={{ position: "relative", width: "100%", maxWidth: "900px", height: "450px", margin: "0 auto" }}>
               <Image 
-                src="/images/ill_city_rides.png"
-                alt="City rides illustration"
+                src="/images/ill_freight.png"
+                alt="Freight fleet illustration"
                 fill
                 style={{ objectFit: "contain", objectPosition: "bottom center" }}
               />
@@ -34,33 +34,33 @@ export default function CityRidesPage() {
         <section className="section">
           <div className="container">
             <div style={{ textAlign: "center", marginBottom: "48px" }}>
-              <span className="split-eyebrow" style={{ color: "var(--color-indigo)", fontWeight: 700, textTransform: "uppercase", fontSize: "0.875rem", letterSpacing: "0.05em", display: "block", marginBottom: "16px" }}>How it works</span>
-              <h2 className="font-display" style={{ fontSize: "36px" }}>Ready when you are</h2>
+              <span className="split-eyebrow" style={{ color: "var(--color-indigo)", fontWeight: 700, textTransform: "uppercase", fontSize: "0.875rem", letterSpacing: "0.05em", display: "block", marginBottom: "16px" }}>Business Fleet</span>
+              <h2 className="font-display" style={{ fontSize: "36px" }}>Maximize your fleet's potential</h2>
             </div>
             
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px", marginBottom: "60px" }}>
               <div style={{ background: "white", padding: "32px", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-card)", border: "1px solid var(--admin-border)" }}>
                 <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "var(--color-indigo-tint)", color: "var(--color-indigo)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>1</div>
-                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Request a ride</h4>
-                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Open the Riksho app, enter your destination, and see your upfront fare immediately.</p>
+                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Consistent Bookings</h4>
+                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Connect your trucks or vans to Riksho's business network and reduce empty trips.</p>
               </div>
               <div style={{ background: "white", padding: "32px", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-card)", border: "1px solid var(--admin-border)" }}>
                 <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "var(--color-indigo-tint)", color: "var(--color-indigo)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>2</div>
-                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Meet your driver</h4>
-                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Track your verified driver on the map. We will let you know when they arrive.</p>
+                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Dedicated Fleet Portal</h4>
+                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Manage multiple vehicles and drivers from a single, powerful admin dashboard.</p>
               </div>
               <div style={{ background: "white", padding: "32px", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-card)", border: "1px solid var(--admin-border)" }}>
                 <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "var(--color-indigo-tint)", color: "var(--color-indigo)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>3</div>
-                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Enjoy the journey</h4>
-                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Sit back and relax. Pay seamlessly in cash or UPI at the end of the trip.</p>
+                <h4 className="font-display" style={{ fontSize: "20px", marginBottom: "8px" }}>Secure B2B Payments</h4>
+                <p className="text-muted" style={{ fontSize: "15px", lineHeight: "1.6" }}>Guaranteed weekly payouts for corporate contracts. Never chase an invoice again.</p>
               </div>
             </div>
             
             {/* Real Photo Banner */}
             <div style={{ position: "relative", width: "100%", height: "500px", borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-card)" }}>
               <Image 
-                src="/images/photo_city_rides.png"
-                alt="Passenger in cab"
+                src="/images/photo_freight.png"
+                alt="Truck driver with clipboard"
                 fill
                 style={{ objectFit: "cover" }}
               />
@@ -74,9 +74,9 @@ export default function CityRidesPage() {
         {/* CTA Band */}
         <section className="section text-center" style={{ backgroundColor: "var(--color-indigo)", color: "white" }}>
           <div className="container">
-            <h2 className="font-display" style={{ fontSize: "36px", marginBottom: "24px", color: "white" }}>Ready to move?</h2>
+            <h2 className="font-display" style={{ fontSize: "36px", marginBottom: "24px", color: "white" }}>Ready to partner?</h2>
             <Link href="/#download" className="btn-white" style={{ fontSize: "16px", padding: "14px 32px" }}>
-              Get the App
+              Join as a Fleet
             </Link>
           </div>
         </section>
