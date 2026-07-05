@@ -2,12 +2,12 @@ import Link from "next/link";
 
 const footerColumns = [
   {
-    title: "Services & Locations",
+    title: "Services",
     links: [
       { label: "City rides", href: "/city-rides" },
       { label: "City to City", href: "/city-to-city" },
       { label: "Delivery", href: "/delivery" },
-      { label: "Cities & Airports", href: "/cities" },
+      { label: "Cities", href: "/cities" },
     ],
   },
   {
@@ -20,12 +20,12 @@ const footerColumns = [
     ],
   },
   {
-    title: "Company & Impact",
+    title: "Company",
     links: [
       { label: "About Us", href: "/about-us" },
       { label: "Careers", href: "/careers" },
       { label: "Safety Hub", href: "/safety" },
-      { label: "Impact & Sustainability", href: "/impact" },
+      { label: "Impact", href: "/impact" },
     ],
   },
   {
