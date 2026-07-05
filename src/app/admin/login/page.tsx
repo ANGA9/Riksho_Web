@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { supabaseAdminClient } from "@/lib/supabaseAdminClient";
+import { AlertCircle, ArrowLeft } from "lucide-react";
 import "../admin.css";
 
 export default function AdminLogin() {
@@ -110,18 +111,19 @@ export default function AdminLogin() {
     <div className="admin-login-container">
       <div className="admin-login-card">
         <img src="/images/final_riksho.png" alt="Riksho Admin" className="admin-login-logo" />
-        <h2 className="admin-page-title" style={{ fontSize: "24px", marginBottom: "8px" }}>Admin Portal</h2>
-        <p style={{ color: "var(--color-text-muted)", marginBottom: "24px" }}>
+        <h2 className="admin-login-title">Admin Portal</h2>
+        <p className="admin-login-sub">
           Sign in to manage drivers and platform operations.
         </p>
 
-        {error && <div className="admin-error">{error}</div>}
+        {error && <div className="admin-error"><AlertCircle /> {error}</div>}
 
         {step === "email" ? (
           <form onSubmit={handleSendCode}>
+            <label className="admin-field-label">Email address</label>
             <input
               type="email"
-              placeholder="Admin Email Address"
+              placeholder="you@riksho.com"
               className="admin-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -137,48 +139,40 @@ export default function AdminLogin() {
           </form>
         ) : (
           <form onSubmit={handleVerifyCode}>
-            <p style={{ fontSize: "14px", marginBottom: "16px" }}>Code sent to {email}</p>
-            <div style={{ display: "flex", gap: "8px", justifyContent: "center", marginBottom: "24px" }}>
+            <label className="admin-field-label">
+              Enter the 6-digit code sent to <strong>{email}</strong>
+            </label>
+            <div className="admin-otp-group">
               {otpArray.map((digit, index) => (
                 <input
                   key={index}
                   ref={(el) => { inputRefs.current[index] = el; }}
                   type="text"
                   inputMode="numeric"
-                  className="admin-input"
-                  style={{ 
-                    width: "48px", 
-                    height: "56px", 
-                    textAlign: "center", 
-                    fontSize: "24px", 
-                    padding: "0",
-                    margin: "0",
-                    fontWeight: 600,
-                    color: "var(--color-indigo)"
-                  }}
+                  className="admin-otp-box"
                   value={digit}
                   onChange={(e) => handleOtpChange(index, e.target.value)}
                   onKeyDown={(e) => handleOtpKeyDown(index, e)}
-                  maxLength={6} // Allow paste up to 6 chars
+                  maxLength={6}
                   required={index === 0}
                 />
               ))}
             </div>
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="admin-btn admin-btn-primary admin-btn-block"
               disabled={loading}
             >
-              {loading ? "Verifying..." : "Sign In"}
+              {loading ? "Verifying…" : "Sign In"}
             </button>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="admin-btn admin-btn-secondary admin-btn-block"
-              style={{ marginTop: "12px" }}
+              style={{ marginTop: "10px" }}
               onClick={() => setStep("email")}
               disabled={loading}
             >
-              Back
+              <ArrowLeft /> Back
             </button>
           </form>
         )}

@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { adminFetch } from "@/lib/adminApi";
 import Link from "next/link";
+import { ArrowLeft, User, Car, ShieldCheck, BarChart3, Check, X, Ban, Star, Loader2 } from "lucide-react";
 
 export default function DriverDetail() {
-  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
   
@@ -59,11 +59,11 @@ export default function DriverDetail() {
 
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", marginBottom: "24px", gap: "16px" }}>
-        <Link href="/admin/drivers" className="admin-btn admin-btn-secondary">
-          &larr; Back to List
+      <div className="admin-detail-topbar">
+        <Link href="/admin/drivers" className="admin-back-link">
+          <ArrowLeft /> Back
         </Link>
-        <h1 className="admin-page-title" style={{ marginBottom: 0 }}>Driver Profile</h1>
+        <h1 className="admin-page-title" style={{ marginBottom: 0 }}>{driver.name}</h1>
         <span className={`admin-badge badge-${driver.verification_status}`}>
           {driver.verification_status}
         </span>
@@ -71,9 +71,9 @@ export default function DriverDetail() {
 
       <div className="admin-detail-grid">
         {/* Left Column: Info */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div className="admin-card">
-            <h2>Personal Information</h2>
+            <h2><User /> Personal Information</h2>
             <div className="admin-info-row">
               <span className="admin-info-label">Full Name</span>
               <span className="admin-info-value">{driver.name}</span>
@@ -95,10 +95,10 @@ export default function DriverDetail() {
           </div>
 
           <div className="admin-card">
-            <h2>Vehicle Information</h2>
+            <h2><Car /> Vehicle Information</h2>
             {driver.vehicles && driver.vehicles.length > 0 ? (
               driver.vehicles.map((v: any, i: number) => (
-                <div key={i} style={{ marginBottom: i < driver.vehicles.length - 1 ? "24px" : "0", borderBottom: i < driver.vehicles.length - 1 ? "1px solid #E5E7EB" : "none", paddingBottom: i < driver.vehicles.length - 1 ? "24px" : "0" }}>
+                <div key={i} style={{ marginBottom: i < driver.vehicles.length - 1 ? "20px" : "0", borderBottom: i < driver.vehicles.length - 1 ? "1px solid #F4F5F7" : "none", paddingBottom: i < driver.vehicles.length - 1 ? "20px" : "0" }}>
                   <div className="admin-info-row">
                     <span className="admin-info-label">Type</span>
                     <span className="admin-info-value" style={{ textTransform: "capitalize" }}>{v.type}</span>
@@ -122,47 +122,51 @@ export default function DriverDetail() {
         {/* Right Column: Actions */}
         <div>
           <div className="admin-card">
-            <h2>Verification Actions</h2>
-            <p style={{ color: "var(--color-text-muted)", fontSize: "14px", marginBottom: "24px" }}>
-              Please review the driver's license and vehicle documents carefully before approving.
+            <h2><ShieldCheck /> Verification</h2>
+            <p style={{ color: "var(--admin-muted)", fontSize: "13px", marginBottom: "20px", lineHeight: 1.5 }}>
+              Review the license and vehicle documents carefully before approving.
             </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {driver.verification_status !== "approved" && (
-                <button 
-                  className="admin-btn admin-btn-primary" 
+                <button
+                  className="admin-btn admin-btn-primary admin-btn-block"
                   onClick={() => handleAction("approve")}
                   disabled={actionLoading}
                 >
-                  ✅ Approve Driver
+                  <Check /> Approve Driver
                 </button>
               )}
 
               {driver.verification_status === "pending" && (
-                <button 
-                  className="admin-btn admin-btn-danger" 
+                <button
+                  className="admin-btn admin-btn-danger admin-btn-block"
                   onClick={() => handleAction("reject")}
                   disabled={actionLoading}
                 >
-                  ❌ Reject Application
+                  <X /> Reject Application
                 </button>
               )}
 
               {driver.verification_status === "approved" && (
-                <button 
-                  className="admin-btn admin-btn-danger" 
+                <button
+                  className="admin-btn admin-btn-danger admin-btn-block"
                   onClick={() => handleAction("suspend")}
                   disabled={actionLoading}
                 >
-                  ⛔ Suspend Driver
+                  <Ban /> Suspend Driver
                 </button>
               )}
             </div>
-            {actionLoading && <div style={{ marginTop: "16px", fontSize: "14px", color: "var(--color-indigo)" }}>Processing...</div>}
+            {actionLoading && (
+              <div className="admin-loading-center" style={{ marginTop: "16px", fontSize: "14px" }}>
+                <Loader2 size={15} className="admin-spin" /> Processing…
+              </div>
+            )}
           </div>
 
           <div className="admin-card">
-            <h2>Performance Stats</h2>
+            <h2><BarChart3 /> Performance</h2>
             <div className="admin-info-row">
               <span className="admin-info-label">Total Trips</span>
               <span className="admin-info-value">{driver.total_trips || 0}</span>
@@ -170,13 +174,19 @@ export default function DriverDetail() {
             <div className="admin-info-row">
               <span className="admin-info-label">Rating</span>
               <span className="admin-info-value">
-                {driver.rating ? `${driver.rating} ⭐` : "New"}
+                {driver.rating ? (
+                  <span className="admin-rating"><Star /> {driver.rating}</span>
+                ) : (
+                  <span style={{ color: "var(--admin-muted)" }}>New</span>
+                )}
               </span>
             </div>
             <div className="admin-info-row">
               <span className="admin-info-label">Status</span>
-              <span className="admin-info-value" style={{ textTransform: "capitalize", color: driver.status === "online" ? "#059669" : "var(--color-text-muted)" }}>
-                {driver.status || "offline"}
+              <span className="admin-info-value">
+                <span className={`admin-status-dot ${driver.status === "online" ? "online" : ""}`}>
+                  {driver.status || "offline"}
+                </span>
               </span>
             </div>
           </div>

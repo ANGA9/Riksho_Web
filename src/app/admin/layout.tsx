@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { supabaseAdminClient } from "@/lib/supabaseAdminClient";
 import { adminFetch } from "@/lib/adminApi";
+import { LayoutDashboard, Users, LogOut, ShieldCheck, Loader2 } from "lucide-react";
 import "./admin.css";
 
 export default function AdminLayout({
@@ -67,7 +68,10 @@ export default function AdminLayout({
   if (loading) {
     return (
       <div className="admin-layout" style={{ alignItems: "center", justifyContent: "center" }}>
-        <div style={{ color: "var(--color-indigo)", fontWeight: 600 }}>Loading admin portal...</div>
+        <div className="admin-loading-center">
+          <Loader2 size={18} className="admin-spin" />
+          Loading admin portal…
+        </div>
       </div>
     );
   }
@@ -82,21 +86,23 @@ export default function AdminLayout({
         </div>
         
         <nav className="admin-sidebar-nav">
-          <Link 
-            href="/admin" 
+          <div className="admin-nav-section-label">Overview</div>
+          <Link
+            href="/admin"
             className={`admin-nav-item ${pathname === "/admin" ? "active" : ""}`}
           >
-            📊 Dashboard
+            <LayoutDashboard /> Dashboard
           </Link>
-          <Link 
-            href="/admin/drivers" 
+          <div className="admin-nav-section-label">Operations</div>
+          <Link
+            href="/admin/drivers"
             className={`admin-nav-item ${pathname.startsWith("/admin/drivers") ? "active" : ""}`}
           >
-            🚗 Drivers
+            <Users /> Drivers
           </Link>
           {/* Phase 2:
-          <Link href="/admin/rides" className="admin-nav-item">🛣️ Rides</Link>
-          <Link href="/admin/riders" className="admin-nav-item">👤 Riders</Link>
+          <Link href="/admin/rides" className="admin-nav-item"><Route /> Rides</Link>
+          <Link href="/admin/riders" className="admin-nav-item"><UserRound /> Riders</Link>
           */}
         </nav>
       </aside>
@@ -104,9 +110,11 @@ export default function AdminLayout({
       <main className="admin-main">
         <header className="admin-header">
           <div className="admin-header-user">
-            <span>{user.email}</span>
-            <span className="admin-badge badge-approved" style={{ backgroundColor: "var(--color-indigo)", color: "white" }}>Admin</span>
-            <button onClick={handleLogout} className="admin-logout-btn">Log out</button>
+            <span className="admin-header-email">{user.email}</span>
+            <span className="admin-header-chip"><ShieldCheck size={13} /> Admin</span>
+            <button onClick={handleLogout} className="admin-logout-btn">
+              <LogOut /> Log out
+            </button>
           </div>
         </header>
 

@@ -2,8 +2,8 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { adminFetch } from "@/lib/adminApi";
+import { Search, Users, ChevronLeft, ChevronRight } from "lucide-react";
 
 function DriversListContent() {
   const router = useRouter();
@@ -58,8 +58,9 @@ function DriversListContent() {
 
   return (
     <div>
-      <h1 className="admin-page-title">Drivers Management</h1>
-      
+      <h1 className="admin-page-title">Drivers</h1>
+      <p className="admin-page-subtitle">Review applications and manage driver verification.</p>
+
       <div className="admin-table-container">
         <div className="admin-table-toolbar">
           <div className="admin-tabs">
@@ -74,10 +75,11 @@ function DriversListContent() {
             ))}
           </div>
 
-          <form onSubmit={handleSearch}>
-            <input 
-              type="text" 
-              placeholder="Search name or phone..." 
+          <form onSubmit={handleSearch} className="admin-search-wrap">
+            <Search />
+            <input
+              type="text"
+              placeholder="Search name or phone…"
               className="admin-search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -88,42 +90,47 @@ function DriversListContent() {
         <table className="admin-table">
           <thead>
             <tr>
-              <th>Driver Info</th>
+              <th>Driver</th>
               <th>Phone</th>
               <th>Vehicle</th>
               <th>Status</th>
               <th>Registered</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr>
-                <td colSpan={6} style={{ textAlign: "center", padding: "32px", color: "var(--color-text-muted)" }}>
-                  Loading drivers...
-                </td>
-              </tr>
+              [...Array(6)].map((_, i) => (
+                <tr key={i}>
+                  {[...Array(5)].map((__, j) => (
+                    <td key={j}>
+                      <div className="admin-skel" style={{ height: 14, width: j === 0 ? "70%" : "50%" }} />
+                    </td>
+                  ))}
+                </tr>
+              ))
             ) : drivers.length === 0 ? (
               <tr>
-                <td colSpan={6} style={{ textAlign: "center", padding: "32px", color: "var(--color-text-muted)" }}>
-                  No drivers found.
+                <td colSpan={5}>
+                  <div className="admin-empty">
+                    <Users />
+                    <div className="admin-empty-title">No drivers found</div>
+                    <div className="admin-empty-sub">Nothing matches this filter yet.</div>
+                  </div>
                 </td>
               </tr>
             ) : (
               drivers.map(driver => (
-                <tr key={driver.id}>
+                <tr key={driver.id} onClick={() => router.push(`/admin/drivers/${driver.id}`)}>
                   <td>
-                    <div style={{ fontWeight: 600 }}>{driver.name}</div>
-                    <div style={{ fontSize: "12px", color: "var(--color-text-muted)", marginTop: "4px" }}>
-                      DL: {driver.license_no}
-                    </div>
+                    <div className="admin-cell-title">{driver.name}</div>
+                    <div className="admin-cell-sub">DL {driver.license_no}</div>
                   </td>
-                  <td>{driver.phone}</td>
+                  <td className="admin-cell-mono">{driver.phone}</td>
                   <td>
                     {driver.vehicles?.[0] ? (
                       <div>
                         <span style={{ textTransform: "capitalize", fontWeight: 500 }}>{driver.vehicles[0].type}</span>
-                        <div style={{ fontSize: "12px", color: "var(--color-text-muted)" }}>{driver.vehicles[0].plate}</div>
+                        <div className="admin-cell-sub">{driver.vehicles[0].plate}</div>
                       </div>
                     ) : (
                       "—"
@@ -134,34 +141,30 @@ function DriversListContent() {
                       {driver.verification_status}
                     </span>
                   </td>
-                  <td>{new Date(driver.created_at).toLocaleDateString()}</td>
-                  <td>
-                    <Link href={`/admin/drivers/${driver.id}`} className="admin-btn admin-btn-secondary" style={{ padding: "6px 12px", fontSize: "13px" }}>
-                      Review
-                    </Link>
+                  <td className="admin-cell-sub" style={{ marginTop: 0 }}>
+                    {new Date(driver.created_at).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })}
                   </td>
                 </tr>
               ))
             )}
           </tbody>
         </table>
-        
-        {/* Pagination controls */}
-        <div style={{ padding: "16px 24px", borderTop: "1px solid #E5E7EB", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <button 
-            className="admin-btn admin-btn-secondary" 
+
+        <div className="admin-table-footer">
+          <button
+            className="admin-btn admin-btn-secondary admin-btn-sm"
             disabled={pageParam === 0}
             onClick={() => router.push(`/admin/drivers?status=${statusParam}&q=${searchParam}&page=${Math.max(0, pageParam - 1)}`)}
           >
-            Previous
+            <ChevronLeft /> Previous
           </button>
-          <span style={{ fontSize: "14px", color: "var(--color-text-muted)" }}>Page {pageParam + 1}</span>
-          <button 
-            className="admin-btn admin-btn-secondary"
+          <span className="admin-page-indicator">Page {pageParam + 1}</span>
+          <button
+            className="admin-btn admin-btn-secondary admin-btn-sm"
             disabled={drivers.length < 20}
             onClick={() => router.push(`/admin/drivers?status=${statusParam}&q=${searchParam}&page=${pageParam + 1}`)}
           >
-            Next
+            Next <ChevronRight />
           </button>
         </div>
       </div>

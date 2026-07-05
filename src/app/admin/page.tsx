@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { adminFetch } from "@/lib/adminApi";
 import Link from "next/link";
+import { Clock, CheckCircle2, Radio, CarFront, ArrowRight } from "lucide-react";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
@@ -22,45 +23,51 @@ export default function AdminDashboard() {
     fetchStats();
   }, []);
 
-  if (loading) {
-    return <div>Loading dashboard...</div>;
-  }
+  const cards = [
+    {
+      title: "Pending Approvals",
+      value: stats?.pending ?? 0,
+      icon: Clock,
+      tone: "amber",
+      href: "/admin/drivers?status=pending",
+      cta: "Review queue",
+    },
+    { title: "Approved Drivers", value: stats?.approved ?? 0, icon: CheckCircle2, tone: "green" },
+    { title: "Drivers Online", value: stats?.online ?? 0, icon: Radio, tone: "" },
+    { title: "Rides Today", value: stats?.rides_today ?? 0, icon: CarFront, tone: "cyan" },
+  ];
 
   return (
     <div>
-      <h1 className="admin-page-title">Dashboard Overview</h1>
-      
+      <h1 className="admin-page-title">Dashboard</h1>
+      <p className="admin-page-subtitle">Platform activity at a glance.</p>
+
       <div className="admin-stats-grid">
-        <div className="admin-stat-card">
-          <div className="admin-stat-title">Pending Approvals</div>
-          <div className="admin-stat-value" style={{ color: "#D97706" }}>
-            {stats?.pending || 0}
-          </div>
-          <Link href="/admin/drivers?status=pending" style={{ fontSize: "14px", color: "var(--color-indigo)", marginTop: "12px", display: "inline-block", textDecoration: "none", fontWeight: 500 }}>
-            View pending &rarr;
-          </Link>
-        </div>
-
-        <div className="admin-stat-card">
-          <div className="admin-stat-title">Total Approved Drivers</div>
-          <div className="admin-stat-value">
-            {stats?.approved || 0}
-          </div>
-        </div>
-
-        <div className="admin-stat-card">
-          <div className="admin-stat-title">Drivers Online Now</div>
-          <div className="admin-stat-value" style={{ color: "#059669" }}>
-            {stats?.online || 0}
-          </div>
-        </div>
-
-        <div className="admin-stat-card">
-          <div className="admin-stat-title">Rides Today</div>
-          <div className="admin-stat-value" style={{ color: "var(--color-cyan)" }}>
-            {stats?.rides_today || 0}
-          </div>
-        </div>
+        {cards.map((c) => {
+          const Icon = c.icon;
+          return (
+            <div className="admin-stat-card" key={c.title}>
+              <div className="admin-stat-head">
+                <span className="admin-stat-title">{c.title}</span>
+                <span className={`admin-stat-icon ${c.tone}`}>
+                  <Icon />
+                </span>
+              </div>
+              {loading ? (
+                <div className="admin-skel" style={{ height: 30, width: 64 }} />
+              ) : (
+                <div className="admin-stat-value">{c.value}</div>
+              )}
+              {c.href && (
+                <div className="admin-stat-foot">
+                  <Link href={c.href} className="admin-stat-link">
+                    {c.cta} <ArrowRight />
+                  </Link>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
