@@ -6,46 +6,40 @@ import { supabaseAdminClient } from "@/lib/supabaseAdminClient";
 import { AlertCircle, ArrowLeft } from "lucide-react";
 import "@/styles/portal.css";
 
-export default function AdminLogin() {
+export default function DarkstoreLogin() {
   const router = useRouter();
   const [step, setStep] = useState<"email" | "code">("email");
   const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
   const [otpArray, setOtpArray] = useState(["", "", "", "", "", ""]);
+  const [code, setCode] = useState("");
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleOtpChange = (index: number, value: string) => {
-    // Handle paste or multiple chars
     if (value.length > 1) {
-      const pastedCode = value.slice(0, 6).split('');
+      const pastedCode = value.slice(0, 6).split("");
       const newOtp = [...otpArray];
       pastedCode.forEach((char, i) => {
         if (index + i < 6) newOtp[index + i] = char;
       });
       setOtpArray(newOtp);
-      setCode(newOtp.join(''));
-      
+      setCode(newOtp.join(""));
       const nextIndex = Math.min(index + pastedCode.length, 5);
       inputRefs.current[nextIndex]?.focus();
       return;
     }
-
     const newOtp = [...otpArray];
     newOtp[index] = value;
     setOtpArray(newOtp);
-    setCode(newOtp.join(''));
-
-    // Move to next input
-    if (value !== '' && index < 5) {
+    setCode(newOtp.join(""));
+    if (value !== "" && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
   };
 
   const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !otpArray[index] && index > 0) {
-      // Focus previous input on backspace if current is empty
+    if (e.key === "Backspace" && !otpArray[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
@@ -53,32 +47,24 @@ export default function AdminLogin() {
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
     setLoading(true);
     setError("");
-    
+
     const { error: signInError } = await supabaseAdminClient.auth.signInWithOtp({
       email,
-      options: {
-        shouldCreateUser: false,
-      }
+      options: { shouldCreateUser: false },
     });
 
     setLoading(false);
-
     if (signInError) {
-      // For security, if `shouldCreateUser: false` triggers an error because they don't exist,
-      // it might say "Signups not allowed for otp". 
       if (signInError.message.includes("Signups not allowed")) {
-         setError("This email is not authorized as an admin.");
+        setError("This email is not authorized for store operations.");
       } else {
-         setError(signInError.message);
+        setError(signInError.message);
       }
       return;
     }
-
     setStep("code");
-    // Reset OTP array when going to code step
     setOtpArray(["", "", "", "", "", ""]);
     setCode("");
   };
@@ -86,7 +72,6 @@ export default function AdminLogin() {
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!code) return;
-    
     setLoading(true);
     setError("");
 
@@ -97,23 +82,20 @@ export default function AdminLogin() {
     });
 
     setLoading(false);
-
     if (verifyError) {
       setError(verifyError.message);
       return;
     }
-
-    // Success! Redirect to dashboard (layout will verify the admin role via /admin/me)
-    router.push("/admin");
+    router.push("/darkstore");
   };
 
   return (
     <div className="admin-login-container">
       <div className="admin-login-card">
-        <img src="/images/final_riksho.png" alt="Riksho Admin" className="admin-login-logo" />
-        <h2 className="admin-login-title">Admin Portal</h2>
+        <img src="/images/final_riksho.png" alt="Riksho" className="admin-login-logo" />
+        <h2 className="admin-login-title">Store Operations</h2>
         <p className="admin-login-sub">
-          Sign in to manage drivers and platform operations.
+          Sign in to manage order fulfilment and packing.
         </p>
 
         {error && <div className="admin-error"><AlertCircle /> {error}</div>}
@@ -129,11 +111,7 @@ export default function AdminLogin() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <button 
-              type="submit" 
-              className="admin-btn admin-btn-primary admin-btn-block"
-              disabled={loading}
-            >
+            <button type="submit" className="admin-btn admin-btn-primary admin-btn-block" disabled={loading}>
               {loading ? "Sending..." : "Send Login Code"}
             </button>
           </form>
@@ -158,11 +136,7 @@ export default function AdminLogin() {
                 />
               ))}
             </div>
-            <button
-              type="submit"
-              className="admin-btn admin-btn-primary admin-btn-block"
-              disabled={loading}
-            >
+            <button type="submit" className="admin-btn admin-btn-primary admin-btn-block" disabled={loading}>
               {loading ? "Verifying…" : "Sign In"}
             </button>
             <button

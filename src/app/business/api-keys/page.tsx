@@ -1,8 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Key, Copy, Plus, RefreshCw, Trash2, Globe } from "lucide-react";
+import { portalFetch } from "@/lib/portalFetch";
 
 export default function ApiKeysPage() {
+  const [keys, setKeys] = useState<any[]>([]);
+  const [webhooks, setWebhooks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // For now, we simulate fetching since there isn't a dedicated API keys endpoint 
+  // in the business routes yet, but we remove the hardcoded dummy values.
+  useEffect(() => {
+    // In a real app, this would be: portalFetch("/business/portal/api-keys")
+    setTimeout(() => {
+      setKeys([]);
+      setWebhooks([]);
+      setLoading(false);
+    }, 500);
+  }, []);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
@@ -34,30 +51,31 @@ export default function ApiKeysPage() {
             </div>
 
             <div className="p-6 space-y-4">
-              {/* Key 1 */}
-              <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-100 rounded-xl">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-gray-900">Production Key</span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-wide">Active</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <code className="text-sm font-mono text-gray-600 bg-gray-200 px-2 py-1 rounded">rk_prod_*********************8a2f</code>
-                    <button className="text-gray-400 hover:text-indigo-600 transition-colors">
-                      <Copy size={16} />
-                    </button>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">Last used: 2 minutes ago</p>
+              {loading ? (
+                <p className="text-gray-500 text-sm">Loading keys...</p>
+              ) : keys.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 text-sm mb-2">You haven't generated any API keys yet.</p>
+                  <button className="text-indigo-600 font-medium text-sm hover:underline">Create your first key</button>
                 </div>
-                <div className="flex gap-2">
-                  <button className="p-2 text-gray-400 hover:text-gray-900 transition-colors" title="Rotate Key">
-                    <RefreshCw size={18} />
-                  </button>
-                  <button className="p-2 text-red-400 hover:text-red-600 transition-colors" title="Revoke Key">
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-              </div>
+              ) : (
+                keys.map((k, i) => (
+                  <div key={i} className="flex items-center justify-between p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-gray-900">{k.name}</span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-wide">Active</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <code className="text-sm font-mono text-gray-600 bg-gray-200 px-2 py-1 rounded">{k.masked_key}</code>
+                        <button className="text-gray-400 hover:text-indigo-600 transition-colors">
+                          <Copy size={16} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
@@ -79,25 +97,23 @@ export default function ApiKeysPage() {
             </div>
 
             <div className="p-6">
-              <div className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium text-gray-900">ERP Sync URL</span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-wide">Active</span>
+              {loading ? (
+                <p className="text-gray-500 text-sm">Loading webhooks...</p>
+              ) : webhooks.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 text-sm mb-2">No webhook endpoints configured.</p>
                 </div>
-                <p className="text-sm font-mono text-gray-600 mb-3 break-all">https://api.factory-erp.com/webhooks/riksho</p>
-                
-                <div className="pt-3 border-t border-gray-200 flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-gray-500 mb-1">Signing Secret</p>
-                    <div className="flex items-center gap-2">
-                      <code className="text-xs font-mono text-gray-600 bg-gray-200 px-1.5 py-0.5 rounded">wh_sec_*****************3b1</code>
-                      <button className="text-gray-400 hover:text-indigo-600 transition-colors">
-                        <Copy size={14} />
-                      </button>
+              ) : (
+                webhooks.map((w, i) => (
+                  <div key={i} className="p-4 bg-gray-50 border border-gray-100 rounded-xl">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-medium text-gray-900">{w.name}</span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-wide">Active</span>
                     </div>
+                    <p className="text-sm font-mono text-gray-600 mb-3 break-all">{w.url}</p>
                   </div>
-                </div>
-              </div>
+                ))
+              )}
             </div>
           </div>
         </div>

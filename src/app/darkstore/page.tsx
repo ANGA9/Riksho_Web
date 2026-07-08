@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Package, RefreshCw, CheckCircle2 } from "lucide-react";
-import { adminFetch } from "@/lib/adminApi";
+import { portalFetch } from "@/lib/portalFetch";
 
 type QueueItem = {
   id: string;
@@ -37,7 +37,7 @@ export default function DarkstoreOpsQueue() {
   const load = useCallback(async () => {
     try {
       setError(null);
-      const res = await adminFetch("/orders/queue");
+      const res = await portalFetch("/orders/queue");
       setOrders(res.orders || []);
     } catch (e: any) {
       setError(e.message || "Failed to load queue");
@@ -56,7 +56,7 @@ export default function DarkstoreOpsQueue() {
   const advance = async (order: QueueItem, action: string) => {
     setBusyId(order.id);
     try {
-      await adminFetch(`/orders/${order.id}/${action}`, { method: "POST" });
+      await portalFetch(`/orders/${order.id}/${action}`, { method: "POST" });
       await load();
     } catch (e: any) {
       setError(e.message || "Action failed");
@@ -66,7 +66,7 @@ export default function DarkstoreOpsQueue() {
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto">
+    <div>
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Fulfilment Queue</h1>

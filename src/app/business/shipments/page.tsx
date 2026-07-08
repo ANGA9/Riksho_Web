@@ -1,8 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Upload, Plus, Search, Filter } from "lucide-react";
+import { portalFetch } from "@/lib/portalFetch";
 
 export default function ShipmentsPage() {
+  const [shipments, setShipments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    portalFetch("/business/portal/shipments")
+      .then((res) => setShipments(res.shipments || []))
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
@@ -39,7 +51,7 @@ export default function ShipmentsPage() {
           </button>
         </div>
 
-        {/* Table Mock */}
+        {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-white border-b border-gray-200 text-gray-500">
@@ -53,51 +65,36 @@ export default function ShipmentsPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {/* Row 1 */}
-              <tr className="hover:bg-gray-50">
-                <td className="px-6 py-4 font-medium text-gray-900">SHP-10492</td>
-                <td className="px-6 py-4 text-gray-600">Factory A, Okhla</td>
-                <td className="px-6 py-4 text-gray-600">Warehouse B, Noida</td>
-                <td className="px-6 py-4 text-gray-600">Mini Truck (500kg)</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    In Transit
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <button className="text-indigo-600 hover:text-indigo-900 font-medium">Track</button>
-                </td>
-              </tr>
-              {/* Row 2 */}
-              <tr className="hover:bg-gray-50">
-                <td className="px-6 py-4 font-medium text-gray-900">SHP-10491</td>
-                <td className="px-6 py-4 text-gray-600">Factory A, Okhla</td>
-                <td className="px-6 py-4 text-gray-600">Retail C, Gurgaon</td>
-                <td className="px-6 py-4 text-gray-600">Tempo (200kg)</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                    Finding Driver
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <button className="text-indigo-600 hover:text-indigo-900 font-medium">Cancel</button>
-                </td>
-              </tr>
-              {/* Row 3 */}
-              <tr className="hover:bg-gray-50">
-                <td className="px-6 py-4 font-medium text-gray-900">SHP-10490</td>
-                <td className="px-6 py-4 text-gray-600">Factory B, Surat</td>
-                <td className="px-6 py-4 text-gray-600">Port D, Mumbai</td>
-                <td className="px-6 py-4 text-gray-600">Truck (2000kg)</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                    Delivered
-                  </span>
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <button className="text-indigo-600 hover:text-indigo-900 font-medium">View POD</button>
-                </td>
-              </tr>
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-gray-500">Loading shipments...</td>
+                </tr>
+              ) : shipments.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-gray-500">No shipments found.</td>
+                </tr>
+              ) : (
+                shipments.map((s) => (
+                  <tr key={s.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 font-medium text-gray-900">{s.id.split("-")[0].toUpperCase()}</td>
+                    <td className="px-6 py-4 text-gray-600 truncate max-w-[200px]">{s.origin_address}</td>
+                    <td className="px-6 py-4 text-gray-600 truncate max-w-[200px]">{s.dest_address}</td>
+                    <td className="px-6 py-4 text-gray-600 capitalize">{s.vehicle_type?.replace("_", " ")}</td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        s.status === "completed" ? "bg-green-100 text-green-800" :
+                        s.status === "requested" ? "bg-yellow-100 text-yellow-800" :
+                        "bg-blue-100 text-blue-800"
+                      }`}>
+                        {s.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button className="text-indigo-600 hover:text-indigo-900 font-medium">Track</button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

@@ -1,46 +1,126 @@
-import Link from "next/link";
-import { ArrowLeft, LayoutDashboard, Key, Truck, FileText } from "lucide-react";
+"use client";
 
-export default function BusinessLayout({ children }: { children: React.ReactNode }) {
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
+import { supabaseAdminClient } from "@/lib/supabaseAdminClient";
+import { portalFetch } from "@/lib/portalFetch";
+import { LayoutDashboard, Truck, Key, LogOut, Briefcase, Loader2 } from "lucide-react";
+import "@/styles/portal.css";
+
+export default function BusinessLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    if (pathname === "/business/login") {
+      setLoading(false);
+      return;
+    }
+
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabaseAdminClient.auth.getSession();
+        if (!session) {
+          router.push("/business/login");
+          setLoading(false);
+          return;
+        }
+
+        // Verify business_owner or admin role via backend
+        const me = await portalFetch("/business/portal/me").catch(() => null);
+        const role = me?.role;
+        if (role !== "admin" && role !== "business_owner") {
+          router.push("/business/login");
+          setLoading(false);
+          return;
+        }
+
+        setUser({ email: session.user.email, role, businessName: me?.business?.name || "Business" });
+      } catch (err) {
+        console.error("Business guard failed:", err);
+        router.push("/business/login");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkSession();
+  }, [pathname, router]);
+
+  const handleLogout = async () => {
+    await supabaseAdminClient.auth.signOut();
+    router.push("/business/login");
+  };
+
+  // Login page doesn't get the sidebar shell
+  if (pathname === "/business/login") {
+    return <>{children}</>;
+  }
+
+  if (loading) {
+    return (
+      <div className="admin-layout" style={{ alignItems: "center", justifyContent: "center" }}>
+        <div className="admin-loading-center">
+          <Loader2 size={18} className="admin-spin" />
+          Loading business portal…
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) return null;
+
   return (
-    <div className="flex h-screen bg-gray-50">
-      {/* Sidebar Navigation */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-2xl font-display font-bold text-gray-900 tracking-tight">Riksho Fleet</h2>
-          <p className="text-sm text-gray-500 mt-1">Business Portal</p>
+    <div className="admin-layout">
+      <aside className="admin-sidebar">
+        <div className="admin-sidebar-logo">
+          <img src="/images/final_riksho.png" alt="Riksho Business" />
         </div>
         
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-          <Link href="/business/dashboard" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium">
-            <LayoutDashboard size={20} className="text-gray-500" />
-            Dashboard
+        <nav className="admin-sidebar-nav">
+          <div className="admin-nav-section-label">Logistics</div>
+          <Link
+            href="/business/dashboard"
+            className={`admin-nav-item ${pathname === "/business/dashboard" ? "active" : ""}`}
+          >
+            <LayoutDashboard /> Dashboard
           </Link>
-          <Link href="/business/shipments" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium">
-            <Truck size={20} className="text-gray-500" />
-            Shipments
+          <Link
+            href="/business/shipments"
+            className={`admin-nav-item ${pathname === "/business/shipments" ? "active" : ""}`}
+          >
+            <Truck /> Shipments
           </Link>
-          <Link href="/business/api-keys" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium">
-            <Key size={20} className="text-gray-500" />
-            API & Webhooks
-          </Link>
-          <Link href="/business/invoices" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium">
-            <FileText size={20} className="text-gray-500" />
-            Invoices
+
+          <div className="admin-nav-section-label">Developers</div>
+          <Link
+            href="/business/api-keys"
+            className={`admin-nav-item ${pathname === "/business/api-keys" ? "active" : ""}`}
+          >
+            <Key /> API & Webhooks
           </Link>
         </nav>
-
-        <div className="p-4 border-t border-gray-200">
-          <Link href="/" className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors font-medium">
-            <ArrowLeft size={20} />
-            Back to main site
-          </Link>
-        </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto bg-gray-50 p-8">
-        <div className="max-w-6xl mx-auto">
+      <main className="admin-main">
+        <header className="admin-header">
+          <div className="admin-header-user">
+            <span className="admin-header-email">{user.email}</span>
+            <span className="admin-header-chip"><Briefcase size={13} /> {user.businessName}</span>
+            <button onClick={handleLogout} className="admin-logout-btn">
+              <LogOut /> Log out
+            </button>
+          </div>
+        </header>
+
+        <div className="admin-content">
           {children}
         </div>
       </main>

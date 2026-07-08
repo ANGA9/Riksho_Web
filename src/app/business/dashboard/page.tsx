@@ -1,8 +1,22 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { BarChart3, TrendingUp, CheckCircle, Clock } from "lucide-react";
+import { portalFetch } from "@/lib/portalFetch";
 
 export default function BusinessDashboard() {
+  const [stats, setStats] = useState({ active: 0, completed: 0, scheduled: 0, spend: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    portalFetch("/business/portal/stats")
+      .then(setStats)
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div className="text-gray-500">Loading dashboard...</div>;
+
   return (
     <div>
       <h1 className="text-3xl font-display font-bold text-gray-900 mb-2">Overview</h1>
@@ -13,7 +27,7 @@ export default function BusinessDashboard() {
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-500 mb-1">Active Shipments</p>
-            <h3 className="text-2xl font-bold text-gray-900">24</h3>
+            <h3 className="text-2xl font-bold text-gray-900">{stats.active}</h3>
           </div>
           <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center">
             <TruckIcon />
@@ -23,7 +37,7 @@ export default function BusinessDashboard() {
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-500 mb-1">Completed (Month)</p>
-            <h3 className="text-2xl font-bold text-gray-900">412</h3>
+            <h3 className="text-2xl font-bold text-gray-900">{stats.completed}</h3>
           </div>
           <div className="w-12 h-12 bg-green-50 text-green-600 rounded-full flex items-center justify-center">
             <CheckCircle size={24} />
@@ -33,7 +47,7 @@ export default function BusinessDashboard() {
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-500 mb-1">Scheduled Jobs</p>
-            <h3 className="text-2xl font-bold text-gray-900">8</h3>
+            <h3 className="text-2xl font-bold text-gray-900">{stats.scheduled}</h3>
           </div>
           <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center">
             <Clock size={24} />
@@ -43,7 +57,7 @@ export default function BusinessDashboard() {
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-500 mb-1">Logistics Spend</p>
-            <h3 className="text-2xl font-bold text-gray-900">₹45.2k</h3>
+            <h3 className="text-2xl font-bold text-gray-900">₹{(stats.spend / 1000).toFixed(1)}k</h3>
           </div>
           <div className="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center">
             <TrendingUp size={24} />

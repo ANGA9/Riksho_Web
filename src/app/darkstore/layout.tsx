@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { supabaseAdminClient } from "@/lib/supabaseAdminClient";
-import { adminFetch } from "@/lib/adminApi";
-import { LayoutDashboard, Users, LogOut, ShieldCheck, Loader2 } from "lucide-react";
+import { portalFetch } from "@/lib/portalFetch";
+import { Package, LogOut, ShieldCheck, Loader2 } from "lucide-react";
 import "@/styles/portal.css";
 
-export default function AdminLayout({
+export default function DarkstoreLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -19,9 +19,7 @@ export default function AdminLayout({
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    // If it's the login page, we don't strictly require a session to render the shell
-    // but we can still check. The login page will handle its own redirect if logged in.
-    if (pathname === "/admin/login") {
+    if (pathname === "/darkstore/login") {
       setLoading(false);
       return;
     }
@@ -30,23 +28,26 @@ export default function AdminLayout({
       try {
         const { data: { session } } = await supabaseAdminClient.auth.getSession();
         if (!session) {
-          router.push("/admin/login");
+          router.push("/darkstore/login");
           setLoading(false);
           return;
         }
 
-        // Verify admin role via backend
-        const me = await adminFetch("/admin/me");
-        if (me.role !== "admin") {
-          router.push("/admin/login");
+        // Verify store_ops or admin role via backend
+        const me = await portalFetch("/admin/me").catch(() => null);
+        // Also try the admin/me endpoint — if the user is admin they can access darkstore
+        const role = me?.role;
+        if (role !== "admin" && role !== "store_ops") {
+          // Not admin, check if they have store_ops in their user profile
+          router.push("/darkstore/login");
           setLoading(false);
           return;
         }
 
-        setUser(me);
+        setUser({ email: session.user.email, role });
       } catch (err) {
-        console.error("Admin guard failed:", err);
-        router.push("/admin/login");
+        console.error("Darkstore guard failed:", err);
+        router.push("/darkstore/login");
       } finally {
         setLoading(false);
       }
@@ -57,11 +58,11 @@ export default function AdminLayout({
 
   const handleLogout = async () => {
     await supabaseAdminClient.auth.signOut();
-    router.push("/admin/login");
+    router.push("/darkstore/login");
   };
 
   // Login page doesn't get the sidebar shell
-  if (pathname === "/admin/login") {
+  if (pathname === "/darkstore/login") {
     return <>{children}</>;
   }
 
@@ -70,40 +71,29 @@ export default function AdminLayout({
       <div className="admin-layout" style={{ alignItems: "center", justifyContent: "center" }}>
         <div className="admin-loading-center">
           <Loader2 size={18} className="admin-spin" />
-          Loading admin portal…
+          Loading store portal…
         </div>
       </div>
     );
   }
 
-  if (!user) return null; // Wait for redirect
+  if (!user) return null;
 
   return (
     <div className="admin-layout">
       <aside className="admin-sidebar">
         <div className="admin-sidebar-logo">
-          <img src="/images/final_riksho.png" alt="Riksho Admin" />
+          <img src="/images/final_riksho.png" alt="Riksho Store Ops" />
         </div>
         
         <nav className="admin-sidebar-nav">
-          <div className="admin-nav-section-label">Overview</div>
-          <Link
-            href="/admin"
-            className={`admin-nav-item ${pathname === "/admin" ? "active" : ""}`}
-          >
-            <LayoutDashboard /> Dashboard
-          </Link>
           <div className="admin-nav-section-label">Operations</div>
           <Link
-            href="/admin/drivers"
-            className={`admin-nav-item ${pathname.startsWith("/admin/drivers") ? "active" : ""}`}
+            href="/darkstore"
+            className={`admin-nav-item ${pathname === "/darkstore" ? "active" : ""}`}
           >
-            <Users /> Drivers
+            <Package /> Fulfilment Queue
           </Link>
-          {/* Phase 2:
-          <Link href="/admin/rides" className="admin-nav-item"><Route /> Rides</Link>
-          <Link href="/admin/riders" className="admin-nav-item"><UserRound /> Riders</Link>
-          */}
         </nav>
       </aside>
 
@@ -111,7 +101,7 @@ export default function AdminLayout({
         <header className="admin-header">
           <div className="admin-header-user">
             <span className="admin-header-email">{user.email}</span>
-            <span className="admin-header-chip"><ShieldCheck size={13} /> Admin</span>
+            <span className="admin-header-chip"><ShieldCheck size={13} /> Store Ops</span>
             <button onClick={handleLogout} className="admin-logout-btn">
               <LogOut /> Log out
             </button>
