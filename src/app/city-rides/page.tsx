@@ -75,7 +75,7 @@ export default function CityRidesPage() {
               <div style={{ background: "#f9fafb", padding: "32px", borderRadius: "var(--radius-lg)", border: "1px solid var(--admin-border)", position: "relative" }}>
                 <div style={{ position: "absolute", top: "24px", right: "24px", background: "white", padding: "4px 12px", borderRadius: "20px", fontSize: "14px", fontWeight: "600", border: "1px solid var(--admin-border)", color: "var(--color-indigo)" }}>Budget</div>
                 <div style={{ height: "160px", position: "relative", marginBottom: "24px" }}>
-                  <Image src="/images/cab.png" alt="Mini Hatchback" fill style={{ objectFit: "contain" }} />
+                  <Image src="/images/mini_car.png" alt="Mini Hatchback" fill style={{ objectFit: "contain" }} />
                 </div>
                 <h4 className="font-display" style={{ fontSize: "24px", marginBottom: "8px" }}>Mini</h4>
                 <p className="text-muted" style={{ fontSize: "15px" }}>Compact hatchbacks for quick, affordable everyday commutes across town.</p>
@@ -83,7 +83,7 @@ export default function CityRidesPage() {
               <div style={{ background: "#f9fafb", padding: "32px", borderRadius: "var(--radius-lg)", border: "1px solid var(--admin-border)", position: "relative" }}>
                 <div style={{ position: "absolute", top: "24px", right: "24px", background: "white", padding: "4px 12px", borderRadius: "20px", fontSize: "14px", fontWeight: "600", border: "1px solid var(--admin-border)", color: "var(--color-indigo)" }}>Comfort</div>
                 <div style={{ height: "160px", position: "relative", marginBottom: "24px" }}>
-                  <Image src="/images/cab.png" alt="Sedan" fill style={{ objectFit: "contain" }} />
+                  <Image src="/images/sedan_car.png" alt="Sedan" fill style={{ objectFit: "contain" }} />
                 </div>
                 <h4 className="font-display" style={{ fontSize: "24px", marginBottom: "8px" }}>Sedan</h4>
                 <p className="text-muted" style={{ fontSize: "15px" }}>Extra legroom and comfort for business trips or relaxing rides.</p>
@@ -91,7 +91,7 @@ export default function CityRidesPage() {
               <div style={{ background: "#f9fafb", padding: "32px", borderRadius: "var(--radius-lg)", border: "1px solid var(--admin-border)", position: "relative" }}>
                 <div style={{ position: "absolute", top: "24px", right: "24px", background: "white", padding: "4px 12px", borderRadius: "20px", fontSize: "14px", fontWeight: "600", border: "1px solid var(--admin-border)", color: "var(--color-indigo)" }}>Premium</div>
                 <div style={{ height: "160px", position: "relative", marginBottom: "24px" }}>
-                  <Image src="/images/cab.png" alt="SUV" fill style={{ objectFit: "contain" }} />
+                  <Image src="/images/suv_car.png" alt="SUV" fill style={{ objectFit: "contain" }} />
                 </div>
                 <h4 className="font-display" style={{ fontSize: "24px", marginBottom: "8px" }}>SUV</h4>
                 <p className="text-muted" style={{ fontSize: "15px" }}>Spacious seating for up to 6 people, perfect for group outings and luggage.</p>
